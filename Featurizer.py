@@ -13,4 +13,3 @@ class Featurizer:
     @abstractmethod
     def getFeatureRepresentation(self, X_train, X_val):
         pass
-
