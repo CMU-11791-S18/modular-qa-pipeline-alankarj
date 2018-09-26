@@ -1,6 +1,7 @@
 import sys
 import json
 import numpy as np
+import pickle
 from sklearn.externals import joblib
 
 from Retrieval import Retrieval
@@ -46,7 +47,7 @@ class Pipeline(object):
     def question_answering(self):
         dataset_type = self.trainData['origin']
         candidate_answers = self.trainData['candidates']
-        X_train, Y_train = self.makeXY(self.trainData['questions'][0:10])
+        X_train, Y_train = self.makeXY(self.trainData['questions'])
         X_val, Y_val_true = self.makeXY(self.valData['questions'])
 
         # featurization
@@ -57,6 +58,9 @@ class Pipeline(object):
 
         # Prediction
         Y_val_pred = self.clf.predict(X_features_val)
+
+        with open('naive-bayes_count.pkl', 'wb') as f:
+            pickle.dump(Y_val_pred, f)
 
         self.evaluatorInstance = Evaluator()
         a = self.evaluatorInstance.getAccuracy(Y_val_true, Y_val_pred)
@@ -73,7 +77,7 @@ if __name__ == '__main__':
     retrievalInstance = Retrieval()
     featurizerInstance = CountFeaturizer()
     # featurizerInstance = TFIDFFeaturizer()
-    # classifierInstance = MultinomialNaiveBayes()
+    classifierInstance = MultinomialNaiveBayes()
     # classifierInstance = SupportVectorMachine()
-    classifierInstance = MLP()
+    # classifierInstance = MLP()
     trainInstance = Pipeline(trainFilePath, valFilePath, retrievalInstance, featurizerInstance, classifierInstance)
