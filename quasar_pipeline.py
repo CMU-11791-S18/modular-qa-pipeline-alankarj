@@ -47,7 +47,7 @@ class Pipeline(object):
     def question_answering(self):
         dataset_type = self.trainData['origin']
         candidate_answers = self.trainData['candidates']
-        X_train, Y_train = self.makeXY(self.trainData['questions'])
+        X_train, Y_train = self.makeXY(self.trainData['questions'][0:50])
         X_val, Y_val_true = self.makeXY(self.valData['questions'])
 
         # featurization
@@ -66,9 +66,9 @@ class Pipeline(object):
         a = self.evaluatorInstance.getAccuracy(Y_val_true, Y_val_pred)
         p, r, f = self.evaluatorInstance.getPRF(Y_val_true, Y_val_pred)
         print("Accuracy: " + str(a))
-        print("Precision: " + str(a))
-        print("Recall: " + str(a))
-        print("F-measure: " + str(a))
+        print("Precision: " + str(p))
+        print("Recall: " + str(r))
+        print("F-measure: " + str(f))
 
 
 if __name__ == '__main__':
