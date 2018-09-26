@@ -47,7 +47,7 @@ class Pipeline(object):
     def question_answering(self):
         dataset_type = self.trainData['origin']
         candidate_answers = self.trainData['candidates']
-        X_train, Y_train = self.makeXY(self.trainData['questions'][0:50])
+        X_train, Y_train = self.makeXY(self.trainData['questions'])
         X_val, Y_val_true = self.makeXY(self.valData['questions'])
 
         # featurization
