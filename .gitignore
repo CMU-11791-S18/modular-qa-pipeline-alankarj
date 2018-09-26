@@ -2,6 +2,8 @@
 .DS_Store
 data/*
 naive-bayes_count.pkl
+nb_c.pkl
+nb_t.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

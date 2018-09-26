@@ -14,6 +14,7 @@ from MultinomialNaiveBayes import MultinomialNaiveBayes
 from svm_classifier import SupportVectorMachine
 from mlp_classifier import MLP
 from Evaluator import Evaluator
+from sklearn.decomposition import TruncatedSVD
 
 
 class Pipeline(object):
@@ -54,6 +55,11 @@ class Pipeline(object):
         X_features_train, X_features_val = self.featurizerInstance.getFeatureRepresentation(X_train, X_val)
         print(np.shape(X_features_train))
         print(np.shape(X_features_val))
+
+        pca = TruncatedSVD(n_components=300)
+        X_features_train = pca.fit_transform(X_features_train)
+        X_features_val = pca.transform(X_features_val)
+
         self.clf = self.classifierInstance.buildClassifier(X_features_train, Y_train)
 
         # Prediction
@@ -77,7 +83,7 @@ if __name__ == '__main__':
     retrievalInstance = Retrieval()
     featurizerInstance = CountFeaturizer()
     # featurizerInstance = TFIDFFeaturizer()
-    classifierInstance = MultinomialNaiveBayes()
+    # classifierInstance = MultinomialNaiveBayes()
     # classifierInstance = SupportVectorMachine()
-    # classifierInstance = MLP()
+    classifierInstance = MLP()
     trainInstance = Pipeline(trainFilePath, valFilePath, retrievalInstance, featurizerInstance, classifierInstance)
