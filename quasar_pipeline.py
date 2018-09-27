@@ -68,6 +68,9 @@ class Pipeline(object):
         with open('naive-bayes_count.pkl', 'wb') as f:
             pickle.dump(Y_val_pred, f)
 
+        # with open('true.pkl', 'wb') as f:
+        #     pickle.dump(Y_val_true, f)
+
         self.evaluatorInstance = Evaluator()
         a = self.evaluatorInstance.getAccuracy(Y_val_true, Y_val_pred)
         p, r, f = self.evaluatorInstance.getPRF(Y_val_true, Y_val_pred)
@@ -81,9 +84,9 @@ if __name__ == '__main__':
     trainFilePath = sys.argv[1]  # please give the path to your reformatted quasar-s json train file
     valFilePath = sys.argv[2]  # provide the path to val file
     retrievalInstance = Retrieval()
-    featurizerInstance = CountFeaturizer()
-    # featurizerInstance = TFIDFFeaturizer()
+    # featurizerInstance = CountFeaturizer()
+    featurizerInstance = TFIDFFeaturizer()
     # classifierInstance = MultinomialNaiveBayes()
-    # classifierInstance = SupportVectorMachine()
-    classifierInstance = MLP()
+    classifierInstance = SupportVectorMachine()
+    # classifierInstance = MLP()
     trainInstance = Pipeline(trainFilePath, valFilePath, retrievalInstance, featurizerInstance, classifierInstance)

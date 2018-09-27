@@ -4,6 +4,11 @@ data/*
 naive-bayes_count.pkl
 nb_c.pkl
 nb_t.pkl
+mlp_c.pkl
+mlp_t.pkl
+svm_c.pkl
+svm_t.pkl
+true.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
